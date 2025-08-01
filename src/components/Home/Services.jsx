@@ -305,41 +305,6 @@ export default function Services() {
             ))}
           </div>
         </div>
-
-        {/* Bottom CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#21abbd] to-[#e78617] rounded-3xl blur-lg opacity-20" />
-            <div className="relative bg-white/90 backdrop-blur-xl border border-gray-200/50 rounded-3xl p-8 shadow-xl">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div className="text-left">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    Ready to Transform Your Healthcare Operations?
-                  </h3>
-                  <p className="text-gray-600">
-                    Join 500+ healthcare providers who trust us with their
-                    success.
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-gradient-to-r from-[#21abbd] to-[#1a8a9a] text-white font-semibold px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    Schedule Consultation
-                  </motion.button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

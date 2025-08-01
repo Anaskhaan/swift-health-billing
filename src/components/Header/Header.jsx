@@ -8,6 +8,7 @@ import {
   X,
   ArrowRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navItems = [
   {
@@ -23,7 +24,7 @@ const navItems = [
     submenu: [
       { name: "Medical Billing", path: "/services/billing" },
       { name: "Coding Services", path: "/services/coding" },
-      { name: "Revenue Cycle", path: "/services/revenue" },
+      { name: "AR & Denial Management", path: "/services/ar-denial" },
     ],
   },
   {
@@ -127,7 +128,8 @@ export default function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
-                <div
+                <Link
+                  to={item.name === "Home" ? "/" : item.path}
                   key={item.name}
                   className="relative"
                   onMouseEnter={() =>
@@ -175,27 +177,27 @@ export default function Header() {
                             "linear-gradient(90deg, #21abbd 0%, #e78617 100%)",
                         }}
                       />
-                      <div className="p-2">
-                        {item.submenu.map((subItem) => (
-                          <div
-                            key={subItem.name}
-                            className="px-4 py-3 rounded-xl hover:bg-slate-50 transition cursor-pointer"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <div
-                                className="w-2 h-2 rounded-full"
-                                style={{ backgroundColor: "#e78617" }}
-                              />
-                              <span className="font-medium text-slate-800">
-                                {subItem.name}
-                              </span>
-                            </div>
+                      {item.submenu.map((subItem) => (
+                        <Link
+                          to={subItem.path}
+                          key={subItem.name}
+                          className="block px-4 py-3 rounded-xl hover:bg-slate-50 transition"
+                          onClick={() => setActiveSubmenu(null)}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div
+                              className="w-2 h-2 rounded-full"
+                              style={{ backgroundColor: "#e78617" }}
+                            />
+                            <span className="font-medium text-slate-800">
+                              {subItem.name}
+                            </span>
                           </div>
-                        ))}
-                      </div>
+                        </Link>
+                      ))}
                     </div>
                   )}
-                </div>
+                </Link>
               ))}
               <div className="ml-6">
                 <button
@@ -215,29 +217,12 @@ export default function Header() {
               </div>
             </nav>
 
-            {/* Mobile Hamburger */}
+            {/* Mobile Hamburger (intentionally empty or add toggle button) */}
             <button
+              className="md:hidden p-2"
               onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-3 rounded-xl transition-all duration-300 hover:scale-105 z-50"
-              style={{
-                background: isMobileMenuOpen
-                  ? "linear-gradient(135deg, #e78617 0%, #d67510 100%)"
-                  : "linear-gradient(135deg, #21abbd 0%, #1a8a9a 100%)",
-                boxShadow: "0 8px 20px rgba(33, 171, 189, 0.3)",
-              }}
             >
-              {isMobileMenuOpen ? (
-                <X className="text-white" size={24} />
-              ) : (
-                <div className="flex flex-col space-y-1.5">
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      className="block w-6 h-0.5 bg-white rounded-full"
-                    />
-                  ))}
-                </div>
-              )}
+              {isMobileMenuOpen ? <X size={24} /> : <ChevronDown size={24} />}
             </button>
           </div>
         </div>
@@ -249,7 +234,7 @@ export default function Header() {
           <div className="container mx-auto px-6 pb-24">
             <nav className="space-y-2">
               {navItems.map((item) => (
-                <div key={item.name}>
+                <Link to={item.path} key={item.name}>
                   {item.submenu ? (
                     <div className="mb-3">
                       <button
@@ -287,10 +272,11 @@ export default function Header() {
                       >
                         <div className="ml-10 pr-6 space-y-2">
                           {item.submenu.map((subItem) => (
-                            <button
+                            <Link
+                              to={subItem.path}
                               key={subItem.name}
                               onClick={handleMobileLinkClick}
-                              className="w-full text-left py-2 px-4 rounded-xl hover:bg-slate-100 transition"
+                              className="block w-full text-left py-2 px-4 rounded-xl hover:bg-slate-100 transition"
                             >
                               <div className="flex items-center space-x-3">
                                 <div
@@ -301,15 +287,16 @@ export default function Header() {
                                   {subItem.name}
                                 </span>
                               </div>
-                            </button>
+                            </Link>
                           ))}
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <button
+                    <Link
+                      to={item.path}
                       onClick={handleMobileLinkClick}
-                      className="w-full px-6 py-4 rounded-2xl hover:bg-slate-50 text-left transition"
+                      className="w-full px-6 py-4 rounded-2xl hover:bg-slate-50 text-left transition block"
                     >
                       <div className="flex items-center space-x-4">
                         <item.icon size={20} style={{ color: "#e78617" }} />
@@ -317,9 +304,9 @@ export default function Header() {
                           {item.name}
                         </span>
                       </div>
-                    </button>
+                    </Link>
                   )}
-                </div>
+                </Link>
               ))}
               <div className="pt-6 px-6">
                 <button
